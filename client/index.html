@@ -118,7 +118,7 @@
         </footer>
       </div>
     </div>
-    <div class="modal">
+    <div class="modal ">
       <div class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
@@ -137,7 +137,7 @@
         </footer>
       </div>
     </div>
-  <div class="modal>
+  <div class="modal  ">
     <div class="modal-background"></div>
     <div class="modal-card">
       <header class="modal-card-head">
@@ -186,10 +186,31 @@
       </header>
       <section class="modal-card-body">
         <form class="" action="index.html" method="post">
-          <input class="input" type="text" name="username" placeholder="Ketik nama barang / kos / kontrakan di sini">
-          <input class="input" type="text" name="deskripsi" placeholder="Ketik deskripsi di sini">
-          <input class="input" type="text" name="harga" placeholder="Ketik harga di sini">
-          <input class="input" type="text" name="kontak" placeholder="Ketik info kontak penjual di sini">
+          <label class="label"> Kategori </label>
+          <p class="control">
+            <span class="select">
+              <select class="" name="category">
+                <option value="barang"> Barang </option>
+                <option value="kos"> Kos-an / Kontrak-an </option>
+              </select>
+            </span>
+          </p>
+          <div class="field">
+            <label class="label"> Judul </label>
+            <input class="input" type="text" name="nama_barang" placeholder="Ketik nama barang / kos / kontrakan di sini">
+          </div>
+          <div class="field">
+            <label class="label"> Deskripsi </label>
+            <input class="input" type="text" name="deskripsi" placeholder="Ketik deskripsi di sini">
+          </div>
+          <div class="field">
+            <label class="label"> URL Foto </label>
+            <input class="input" type="text" name="foto" placeholder="Ketik url foto di sini">
+          </div>
+          <div class="field">
+            <label class="label"> Harga </label>
+            <input class="input" type="text" name="harga" placeholder="Ketik harga di sini">
+          </div>
       </section>
       <footer class="modal-card-foot">
           <button class="button is-success" type="submit" name="button"> Jual </button>
