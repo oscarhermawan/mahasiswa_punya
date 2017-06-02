@@ -2,9 +2,165 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>UTAMA</title>
+    <title> Mahasiswa Punya! </title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" id="bulma" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.2/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="./public/stylesheets/style.css">
   </head>
   <body>
-
+    <section class="hero is-info is-medium">
+      <div class="hero-head">
+        <header class="nav">
+          <div class="container">
+            <div class="nav-left">
+              <a href="#" class="nav-item">
+                <!--Logo to homepage  -->
+              </a>
+            </div>
+            <div class="nav-right">
+              <span class="nav-item">
+                <a class="button is-info">
+                  Masuk
+                </a>
+                <a class="button is-info">
+                  Daftar
+                </a>
+              </span>
+            </div>
+          </div>
+        </header>
+      </div>
+      <!-- <div class="hero-body">
+        <div class="container has-text-centered">
+          <!-- Promosi Banner -->
+        <!-- </div>
+      </div> -->
+      <div class="hero-foot">
+        <nav class="tabs">
+          <div class="container">
+            <ul>
+              <li class="is-active"> Mau Cari Apa Bos ? </li>
+              <li><a href="#" class="button is-info"> Barang Kos-an </a></li>
+              <li><a href="#" class="button is-info"> Kos & Kontrakan </a></li>
+              <li><a href="#" class="button is-info"> Semuanya </a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </section>
+    <div class="container section">
+      <div class="columns gallery">
+        <div class="column is-4">
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title">
+                Kompor Listrik Maspion
+              </p>
+              <span class="card-header-icon timestamp">
+                2 Juni 2017 11:00
+              </span>
+            </header>
+            <div class="card-image">
+              <figure class="image is-4by3">
+                <img src="http://www.tokoperabotan.com/288-3227-thickbox/kompor-listrik-maspion-s-300.jpg" alt="Image">
+              </figure>
+            </div>
+            <div class="card-content">
+              <div class="panel-block-item">
+                <span class="likes">
+                  <span class="icon">
+                    <i class="fa fa-cart-plus"></i>
+                  </span>
+                  <a href="button is-info"> Beli </a>
+                </span>
+                <span class="comments">
+                  <span class="icon">
+                    <i class="fa fa-money"></i>
+                  </span>
+                  Rp 150.000
+                </span>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div>
+      <footer class="footer is-paddingless">
+        <div class="nav is-paddingless">
+          <div class="nav-left">
+            <a href="#" class="nav-item"> Created By Oscar & Nugraha & Zulfikar </a>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <div class="modal" id="sign-up">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Daftar</p>
+          <button class="delete"></button>
+        </header>
+          <section class="modal-card-body">
+            <form class="" action="index.html" method="post">
+              <input class="input" type="text" name="username" placeholder="Ketik username di sini">
+              <input class="input" type="password" name="password" placeholder="Ketik password di sini">
+              <input class="input" type="text" name="nama" placeholder="Ketik nama di sini">
+              <input class="input" type="text" name="email" placeholder="Ketik email di sini">
+              <input class="input" type="text" name="kampus" placeholder="Ketik kampus di sini">
+              <input class="input" type="text" name="contact" placeholder="Ketik nomer HP di sini">
+              <input  class="input" type="text" name="lokasi" placeholder="Ketik lokasi di sini">
+          </section>
+        <footer class="modal-card-foot">
+          <button type="submit" name="button" class="button is-success"> Daftar! </button>
+            </form>
+          <a class="button">Batal</a>
+        </footer>
+      </div>
+    </div>
+    <div class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Masuk</p>
+          <button class="delete"></button>
+        </header>
+        <section class="modal-card-body">
+          <form class="" action="index.html" method="post">
+            <input class="input" type="text" name="username" placeholder="Ketik username di sini">
+            <input class="input" type="password" name="password" placeholder="Ketik password di sini">
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-success" type="submit" name="button"> Masuk </button>
+          </form>
+          <a class="button">Cancel</a>
+        </footer>
+      </div>
+    </div>
+  <div class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Keranjang</p>
+        <button class="delete"></button>
+      </header>
+      <section class="modal-card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th> No </th>
+              <th> Barang </th>
+              <th> Hapus dari keranjang</th>
+            </tr>
+          </thead>
+          
+        </table>
+      </section>
+      <footer class="modal-card-foot">
+        <a class="button is-success">Save changes</a>
+        <a class="button">Cancel</a>
+      </footer>
+    </div>
+  </div>
   </body>
 </html>
