@@ -3,8 +3,126 @@
   <head>
     <meta charset="utf-8">
     <title>UTAMA</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.1/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.min.js"></script>
   </head>
   <body>
+    <div id="app">
 
+    </div>
   </body>
+  <script>
+  var app = new Vue({
+    el: '#app',
+    data:{
+      is_login:false,
+      list_items: [],
+      keranjang:[],
+      total:'',
+      username:'',
+      password:'',
+      name:'',
+      email:'',
+      campus:'',
+      contact:'',
+      location:''
+    },
+    methods:{
+      loginLocal:function(){
+          axios.post('http://localhost:3000/api/users/signin',{
+            username:this.username,
+            password:this.password
+          })
+          .then((result)=>{
+            if(result.data.token == null){
+              console.log(result.data.message);
+            }
+            else {
+              localStorage.setItem('token', result.data.token)
+              window.location.href = 'index.html'
+            }
+          })
+          .catch((err)=>{
+            console.log(err);
+          })
+        },
+      tambahKeranjang:function(item){
+        // alert('Keranjang Anda Berhasil Ditambahkan. Untuk Pembayaran / Melihat Keranjang Anda, silahkan klik "Keranjang" di Pojok Kanan atas')
+        var index = this.keranjang.findIndex(keranjang => keranjang._id == book._id)
+        if(index!=-1){
+          let newItem = this.keranjang[index]
+          newItem['jumlah']+=1
+          newItem.subtotal = newItem.jumlah * newItem.price
+          this.keranjang.splice(index, 1, newItem)
+        } else {
+            item['jumlah'] = 1;
+            item['subtotal'] = item.jumlah * item.price
+            this.keranjang.push(item)
+        }
+      },
+      cekKeranjang:function(){
+        let jumlah = 0
+        this.keranjang.forEach(function(item){
+          jumlah += item.subtotal
+        })
+        this.total = jumlah
+        // this.modalnya = 'modal is-active'
+      },
+      logout:function(){
+        window.localStorage.removeItem('token')
+        window.location.href = 'index.html'
+      },
+      registerUser:function(){
+        member:{
+          username:this.username,
+          password:this.password,
+          name:this.name,
+          email:this.email,
+          campus:this.campus,
+          contact:this.contact,
+          location:this.location
+        }
+        axios.post('http://localhost:3000/api/members',member)
+        .then((result)=>{
+          //ALERTNYA
+          window.location.href = 'index.html'
+        })
+        .catch((err)=>{
+          console.log(err);
+        })
+      },
+      bayar:function(){
+        let self = this
+        let data = {
+          value:this.keranjang,
+          totalharga:this.total
+        }
+        axios.post('http://localhost:3000/api/transactions', data)
+        .then(function(response){
+        })
+        .catch(function(err){
+          console.log(err);
+        })
+      }
+    },
+    created:function(){
+      let self = this
+      if(localStorage.getItem('token') != null){
+        self.is_login:true;
+      } else {
+        self.is_login:false;
+      }
+      axios.get('http://localhost:3000/api/items')
+        .then(function(response){
+          self.list_items = response.data
+        })
+        .catch(function(err){
+          console.log(err);
+        })
+    }
+
+
+
+  })
+  </script>
 </html>
