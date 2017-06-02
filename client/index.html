@@ -8,7 +8,23 @@
   </head>
   <body>
     <div id="app">
+      <!-- <input type="text" name="" v-model="username"></br></br>
+      <input type="text" name="" v-model="password"></br></br>
+      <input type="text" name="" v-model="name"></br></br>
+      <input type="text" name="" v-model="email"></br></br>
+      <input type="text" name="" v-model="telpon"></br></br>
+      <input type="text" name="" v-model="location"></br></br>
+      <input type="text" name="" v-model="campus"></br></br>
+      <input type="button" name="" value="sign up" @click="registerUser"> -->
 
+
+
+
+
+      <input type="text" name="" v-model="usernameLogin"></br></br>
+      <input type="text" name="" v-model="passwordLogin"></br></br>
+      <input type="button" name="" value="sign in" @click="loginLocal">
+      <input type="button" name="" value="log out" @click="logout">
     </div>
   </body>
   <script>
@@ -19,19 +35,22 @@
       list_items: [],
       keranjang:[],
       total:'',
+      usernameLogin:'',
+      passwordLogin:'',
       username:'',
       password:'',
       name:'',
       email:'',
       campus:'',
-      contact:'',
+      telpon:'',
       location:''
     },
     methods:{
       loginLocal:function(){
-          axios.post('http://localhost:3000/api/users/signin',{
-            username:this.username,
-            password:this.password
+        console.log(this.is_login);
+          axios.post('http://localhost:3000/api/members/signin',{
+            username:this.usernameLogin,
+            password:this.passwordLogin
           })
           .then((result)=>{
             if(result.data.token == null){
@@ -39,7 +58,7 @@
             }
             else {
               localStorage.setItem('token', result.data.token)
-              window.location.href = 'index.html'
+              window.location.href = '/'
             }
           })
           .catch((err)=>{
@@ -70,24 +89,27 @@
       },
       logout:function(){
         window.localStorage.removeItem('token')
-        window.location.href = 'index.html'
+        window.location.href = '/'
       },
       registerUser:function(){
-        member:{
+        console.log('masuk sini');
+        member={
           username:this.username,
           password:this.password,
           name:this.name,
           email:this.email,
           campus:this.campus,
-          contact:this.contact,
+          telpon:this.telpon,
           location:this.location
         }
-        axios.post('http://localhost:3000/api/members',member)
+        axios.post('http://localhost:3000/api/members/signup',member)
         .then((result)=>{
-          //ALERTNYA
-          window.location.href = 'index.html'
+          alert('Member Berhasil Dibuat')
+          window.location.href = '/'
         })
         .catch((err)=>{
+          // alert('Gagal membuat member')
+          window.location.href = '/'
           console.log(err);
         })
       },
@@ -108,10 +130,11 @@
     created:function(){
       let self = this
       if(localStorage.getItem('token') != null){
-        self.is_login:true;
+        self.is_login=true;
       } else {
-        self.is_login:false;
+        self.is_login=false;
       }
+      console.log(this.is_login);
       axios.get('http://localhost:3000/api/items')
         .then(function(response){
           self.list_items = response.data

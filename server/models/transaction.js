@@ -7,7 +7,10 @@ var SchemaTransaction = new Schema({
   buyer_id: {type: String, ref: 'Member'},
   item_id: {type: String, ref: 'Item'},
   inquary_create_date: Date,
-  sell_date: Date
+  sell_date: Date,
+  id_member:{
+    type: Schema.Types.ObjectId, ref: 'Member'
+  }
 })
 
 

@@ -3,9 +3,14 @@ var Schema = mongoose.Schema
 
 
 var SchemaItem = new Schema({
-  name : String,
+  title : String,
+  description : String,
   price: Number,
-  image: String
+  image: String,
+  category: String,
+  id_member:{
+    type: Schema.Types.ObjectId, ref: 'Member'
+  }
 })
 
 

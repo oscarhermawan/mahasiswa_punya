@@ -8,7 +8,7 @@ var bcrypt = require('bcrypt')
 var Member = require('./models/member.js')
 
 mongoose.Promise = require('bluebird')
-mongoose.connect('mongodb://localhost/group-week2', ()=>{
+mongoose.connect('mongodb://localhost/group-week02', ()=>{
   console.log(`mongoose connected`);
 })
 

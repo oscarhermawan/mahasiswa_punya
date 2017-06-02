@@ -4,11 +4,15 @@ var Item = require('../models/item.js')
 
 module.exports = {
   create : (req, res)=>{
-    var username = req.decoded.username
+
+    //var username = req.decoded.username
     var createItem = new Item({
-      name : req.body.name,
+      title : req.body.title,
+      description : req.body.description,
       price: req.body.price,
-      image: req.body.image
+      image: req.body.image,
+      category: req.body.category,
+      id_member: '593109a30e202d15b663bdbd'
     })
     createItem.save((err, result)=>{
       if(!err){
@@ -20,18 +24,21 @@ module.exports = {
     })
   },
   read: (req, res)=>{
-    Item.find((err, result)=>{
+    Item.find({})
+    .populate('id_member')
+    .exec(function(err, item){
       if(!err){
-        res.send(result)
-      } else {
-        res.send(err)
-      }
+      res.send(item)
+    } else {
+      res.send(err)
+    }
     })
   },
   update: (req, res)=>{
     var username = req.decoded.username
     Item.findByIdAndUpdate(req.params.id, {$set: {
-      name : req.body.name,
+      title : req.body.title,
+      description : req.body.description,
       price: req.body.price,
       image: req.body.image
     }}, { new : true }, (err, result)=>{
