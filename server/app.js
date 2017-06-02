@@ -8,12 +8,13 @@ var bcrypt = require('bcrypt')
 var Member = require('./models/member.js')
 
 mongoose.Promise = require('bluebird')
-mongoose.connect('mongodb://localhost/group-week02', ()=>{
+mongoose.connect('mongodb://localhost/group-week0002', ()=>{
   console.log(`mongoose connected`);
 })
 
 var members = require('./routes/members.js')
 var items = require('./routes/items.js')
+var transactions = require('./routes/transactions.js')
 
 passport.use(new localStrategy(
 (username, password, done)=>{
@@ -38,6 +39,7 @@ app.use(bodyParser.urlencoded({extended: false}))
 
 app.use('/api/members', members)
 app.use('/api/items', items)
+app.use('/api/transactions', transactions)
 
 app.listen(3000)
 console.log(`Connected to port 3000`);

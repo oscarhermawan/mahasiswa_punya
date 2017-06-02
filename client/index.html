@@ -3,13 +3,12 @@
   <head>
     <meta charset="utf-8">
     <title> Mahasiswa Punya! </title>
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js" charset="utf-8"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.1/axios.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.min.js"></script>    
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.1/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" id="bulma" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.2/css/bulma.min.css">
     <link rel="stylesheet" type="text/css" href="./public/stylesheets/style.css">
-  
   </head>
   <body>
     <div id="app">
@@ -24,12 +23,26 @@
             </div>
             <div class="nav-right">
               <span class="nav-item">
-                <a class="button is-info">
-                  Masuk
-                </a>
-                <a class="button is-info">
-                  Daftar
-                </a>
+                <div v-if="is_login === false">
+                  <a class="button is-info" @click="modal_login">
+                    Masuk
+                  </a>
+
+                  <a class="button is-info" @click="modal_signup">
+                    Daftar
+                  </a>
+                </div>
+                <div v-else>
+                  <a class="button is-info" @click="modal_add_barang">
+                    Jual Barang / Oper Kosan
+                  </a>
+                  <a class="button is-info" @click="modal_keranjang">
+                    Keranjang
+                  </a>
+                  <a class="button is-info" @click="logout">
+                    Log Out
+                  </a>
+                </div>
               </span>
             </div>
           </div>
@@ -55,11 +68,14 @@
     </section>
     <div class="container section">
       <div class="columns gallery">
-        <div class="column is-4">
+
+
+
+        <div class="column is-4" v-for="list in list_items">
           <div class="card">
             <header class="card-header">
               <p class="card-header-title">
-                Kompor Listrik Maspion
+                {{list.title}}
               </p>
               <span class="card-header-icon timestamp">
                 2 Juni 2017 11:00
@@ -67,7 +83,7 @@
             </header>
             <div class="card-image">
               <figure class="image is-4by3">
-                <img src="http://www.tokoperabotan.com/288-3227-thickbox/kompor-listrik-maspion-s-300.jpg" alt="Image">
+                <img :src="list.image" alt="Image">
               </figure>
             </div>
             <div class="card-content">
@@ -76,19 +92,24 @@
                   <span class="icon">
                     <i class="fa fa-cart-plus"></i>
                   </span>
-                  <a href="button is-info"> Beli </a>
+                  <a @click="tambahKeranjang(list)"> Beli </a>
                 </span>
                 <span class="comments">
                   <span class="icon">
                     <i class="fa fa-money"></i>
                   </span>
-                  Rp 150.000
+                  {{list.price}}
                 </span>
               </div>
             </div>
           </div>
       </div>
+
+
+
+
     </div>
+  </div>
     <div>
       <footer class="footer is-paddingless">
         <div class="nav is-paddingless">
@@ -98,7 +119,9 @@
         </div>
       </footer>
     </div>
-    <div class="modal" id="sign-up">
+
+    <!-- SIGN UP -->
+    <div :class="modalsignup" id="sign-up">
       <div class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
@@ -107,22 +130,26 @@
         </header>
           <section class="modal-card-body">
             <form class="" action="index.html" method="post">
-              <input class="input" type="text" name="username" placeholder="Ketik username di sini">
-              <input class="input" type="password" name="password" placeholder="Ketik password di sini">
-              <input class="input" type="text" name="nama" placeholder="Ketik nama di sini">
-              <input class="input" type="text" name="email" placeholder="Ketik email di sini">
-              <input class="input" type="text" name="kampus" placeholder="Ketik kampus di sini">
-              <input class="input" type="text" name="contact" placeholder="Ketik nomer HP di sini">
-              <input  class="input" type="text" name="lokasi" placeholder="Ketik lokasi di sini">
+              <input class="input" type="text" v-model="username" placeholder="Ketik username di sini">
+              <input class="input" type="password" v-model="password" placeholder="Ketik password di sini">
+              <input class="input" type="text" v-model="name" placeholder="Ketik nama di sini">
+              <input class="input" type="text" v-model="email" placeholder="Ketik email di sini">
+              <input class="input" type="text" v-model="campus" placeholder="Ketik kampus di sini">
+              <input class="input" type="text" v-model="telpon" placeholder="Ketik nomer HP di sini">
+              <input  class="input" type="text" v-model="location" placeholder="Ketik lokasi di sini">
           </section>
         <footer class="modal-card-foot">
-          <button type="submit" name="button" class="button is-success"> Daftar! </button>
+          <button name="button" class="button is-success" @click="registerUser"> Daftar! </button>
             </form>
-          <a class="button">Batal</a>
+          <a class="button" @click="modal_login_cancel">Batal</a>
         </footer>
       </div>
     </div>
-    <div class="modal ">
+    <!-- END SIGN UP -->
+
+
+    <!-- LOGIN -->
+    <div v-bind:class="modallogin">
       <div class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
@@ -130,18 +157,20 @@
           <button class="delete"></button>
         </header>
         <section class="modal-card-body">
-          <form class="" action="index.html" method="post">
-            <input class="input" type="text" name="username" placeholder="Ketik username di sini">
-            <input class="input" type="password" name="password" placeholder="Ketik password di sini">
+            <input class="input" type="text" v-model="usernameLogin" placeholder="Ketik username di sini">
+            <input class="input" type="password" v-model="passwordLogin" placeholder="Ketik password di sini">
         </section>
         <footer class="modal-card-foot">
-            <button class="button is-success" type="submit" name="button"> Masuk </button>
-          </form>
-          <a class="button">Cancel</a>
+            <button class="button is-success" name="button" @click="loginLocal"> Masukan </button>
+          <a class="button" @click="modal_login_cancel">Cancel</a>
         </footer>
       </div>
     </div>
-  <div class="modal  ">
+    <!-- END LOGIN -->
+
+
+    <!-- KERANJANG -->
+  <div :class="modalkeranjang">
     <div class="modal-background"></div>
     <div class="modal-card">
       <header class="modal-card-head">
@@ -152,36 +181,36 @@
         <table class="table">
           <thead>
             <tr>
-              <th> No </th>
-              <th> Barang </th>
+              <th> Nama Barang </th>
               <th> Harga </th>
               <th> Hapus dari keranjang</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th> 1 </th>
-              <td> Kompor Listrik Maspion </td>
-              <td> Rp 150.000 </td>
+            <tr v-for="list in keranjang">
+              <td> {{list.title}} </td>
+              <td> {{list.price}} </td>
               <td> <a href="#"> Hapus </a></td>
             </tr>
             <tr>
-              <th> 2 </th>
-              <td> Magic Jar Yongma </td>
-              <td> Rp 200.000 </td>
-              <td> <a href="#"> Hapus </a></td>
+              <td> TOTAL </td>
+              <td> {{total}}</td>
+              <td> </a></td>
             </tr>
           </tbody>
         </table>
-        <p><strong> Total : </strong> 350.000</p>
       </section>
       <footer class="modal-card-foot">
-        <a class="button is-success">Bayar</a>
-        <a class="button">Kembali</a>
+        <a class="button is-success" @click="bayar">Bayar</a>
+        <a class="button" @click="modal_keranjang_cancel">Kembali</a>
       </footer>
     </div>
   </div>
-  <div class="modal is-active">
+  <!-- END KERANJANG -->
+
+
+  <!-- ADD BARANG -->
+  <div :class="modaladdbarang">
     <div class="modal-background"></div>
     <div class="modal-card">
       <header class="modal-card-head">
@@ -193,7 +222,7 @@
           <label class="label"> Kategori </label>
           <p class="control">
             <span class="select">
-              <select class="" name="category">
+              <select class="" name="category" v-model="category">
                 <option value="barang"> Barang </option>
                 <option value="kos"> Kos-an / Kontrak-an </option>
               </select>
@@ -201,30 +230,31 @@
           </p>
           <div class="field">
             <label class="label"> Judul </label>
-            <input class="input" type="text" name="nama_barang" placeholder="Ketik nama barang / kos / kontrakan di sini">
+            <input class="input" type="text" name="nama_barang" v-model="title" placeholder="Ketik nama barang / kos / kontrakan di sini">
           </div>
           <div class="field">
             <label class="label"> Deskripsi </label>
-            <input class="input" type="text" name="deskripsi" placeholder="Ketik deskripsi di sini">
+            <input class="input" type="text" name="deskripsi" v-model="description" placeholder="Ketik deskripsi di sini">
           </div>
           <div class="field">
             <label class="label"> URL Foto </label>
-            <input class="input" type="text" name="foto" placeholder="Ketik url foto di sini">
+            <input class="input" type="text" name="foto" v-model="image" placeholder="Ketik url foto di sini">
           </div>
           <div class="field">
             <label class="label"> Harga </label>
-            <input class="input" type="text" name="harga" placeholder="Ketik harga di sini">
+            <input class="input" type="text" name="harga" v-model="price" placeholder="Ketik harga di sini">
           </div>
       </section>
       <footer class="modal-card-foot">
-          <button class="button is-success" type="submit" name="button"> Jual </button>
+          <button class="button is-success" name="button" @click="jualBarang"> Jual </button>
         </form>
-        <a class="button">Cancel</a>
+        <a class="button" @click="modal_login_cancel">Cancel</a>
       </footer>
     </div>
   </div>
-   
-    
+  <!-- END ADD BARANG -->
+
+
       <!-- <input type="text" name="" v-model="username"></br></br>
       <input type="text" name="" v-model="password"></br></br>
       <input type="text" name="" v-model="name"></br></br>
@@ -243,12 +273,15 @@
       <input type="button" name="" value="sign in" @click="loginLocal">
       <input type="button" name="" value="log out" @click="logout"> -->
     </div>
-
   </body>
   <script>
   var app = new Vue({
     el: '#app',
     data:{
+      modallogin:'modal',
+      modalsignup:'modal',
+      modalkeranjang:'modal',
+      modaladdbarang:'modal',
       is_login:false,
       list_items: [],
       keranjang:[],
@@ -261,9 +294,41 @@
       email:'',
       campus:'',
       telpon:'',
-      location:''
+      location:'',
+      title:'',
+      description:'',
+      price:'',
+      image:'',
+      category:'',
+      total:''
     },
     methods:{
+      modal_login:function(){
+        this.modallogin='modal is-active'
+      },
+      modal_login_cancel:function(){
+        this.modallogin='modal'
+        this.modalsignup='modal'
+        this.modaladdbarang='modal'
+      },
+      modal_keranjang:function(){
+        this.modalkeranjang='modal is-active'
+        let jumlah = 0
+        this.keranjang.forEach(function(item){
+          jumlah += item.subtotal
+        })
+        this.total = jumlah
+        // this.modalnya = 'modal is-active'
+      },
+      modal_add_barang:function(){
+        this.modaladdbarang='modal is-active'
+      },
+      modal_signup:function(){
+        this.modalsignup='modal is-active'
+      },
+      modal_keranjang_cancel:function(){
+        this.modalkeranjang='modal'
+      },
       loginLocal:function(){
         console.log(this.is_login);
           axios.post('http://localhost:3000/api/members/signin',{
@@ -285,7 +350,7 @@
         },
       tambahKeranjang:function(item){
         // alert('Keranjang Anda Berhasil Ditambahkan. Untuk Pembayaran / Melihat Keranjang Anda, silahkan klik "Keranjang" di Pojok Kanan atas')
-        var index = this.keranjang.findIndex(keranjang => keranjang._id == book._id)
+        var index = this.keranjang.findIndex(keranjang => keranjang._id == item._id)
         if(index!=-1){
           let newItem = this.keranjang[index]
           newItem['jumlah']+=1
@@ -296,14 +361,7 @@
             item['subtotal'] = item.jumlah * item.price
             this.keranjang.push(item)
         }
-      },
-      cekKeranjang:function(){
-        let jumlah = 0
-        this.keranjang.forEach(function(item){
-          jumlah += item.subtotal
-        })
-        this.total = jumlah
-        // this.modalnya = 'modal is-active'
+        console.log('halo',this.keranjang);
       },
       logout:function(){
         window.localStorage.removeItem('token')
@@ -337,8 +395,31 @@
           value:this.keranjang,
           totalharga:this.total
         }
-        axios.post('http://localhost:3000/api/transactions', data)
+        axios.post('http://localhost:3000/api/transactions', data, { headers: { token: localStorage.getItem('token')}})
         .then(function(response){
+          alert('Data Berhasil Ditambahkan')
+          self.modalkeranjang='modal'
+          self.keranjang=[]
+        })
+        .catch(function(err){
+          console.log(err);
+        })
+      },
+      jualBarang:function(){
+        barang={
+          title:this.title,
+          description:this.description,
+          price:this.price,
+          image:this.image,
+          category:this.category
+        }
+        axios.post('http://localhost:3000/api/items', barang, { headers: { token: localStorage.getItem('token')}})
+        .then(function(response){
+          this.title=''
+          this.description=''
+          this.price=''
+          this.image=''
+          this.category=''
         })
         .catch(function(err){
           console.log(err);
@@ -352,18 +433,15 @@
       } else {
         self.is_login=false;
       }
-      console.log(this.is_login);
       axios.get('http://localhost:3000/api/items')
         .then(function(response){
+          console.log(response.data);
           self.list_items = response.data
         })
         .catch(function(err){
           console.log(err);
         })
     }
-
-
-
   })
   </script>
 </html>

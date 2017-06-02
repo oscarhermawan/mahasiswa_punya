@@ -5,6 +5,8 @@ var Item = require('../models/item.js')
 module.exports = {
   create : (req, res)=>{
 
+    console.log('masuk controller items',req.body);
+
     //var username = req.decoded.username
     var createItem = new Item({
       title : req.body.title,
@@ -12,7 +14,7 @@ module.exports = {
       price: req.body.price,
       image: req.body.image,
       category: req.body.category,
-      id_member: '593109a30e202d15b663bdbd'
+      id_member: req.decoded.id
     })
     createItem.save((err, result)=>{
       if(!err){
@@ -25,7 +27,7 @@ module.exports = {
   },
   read: (req, res)=>{
     Item.find({})
-    .populate('id_member')
+    .populate('id_member', 'username')
     .exec(function(err, item){
       if(!err){
       res.send(item)

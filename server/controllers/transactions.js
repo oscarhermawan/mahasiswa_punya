@@ -4,19 +4,25 @@ var Transaction = require('../models/transaction.js')
 
 module.exports = {
   create : (req, res)=>{
-    var createTransaction = new Transaction({
-      name : req.body.name,
-      price: req.body.price,
-      image: req.body.image
-    })
-    createTransaction.save((err, result)=>{
-      if(!err){
-        res.send(result)
-        console.log(result);
-      } else {
-        res.send(err)
-      }
-    })
+    let tmp = []
+  req.body.value.forEach(function(data){
+    for(let i=0; i<data.jumlah; i++){
+      tmp.push(data._id)
+    }
+  })
+  var input = new Transaction({
+    id_pembeli:req.decoded.id,
+    total_harga:req.body.totalharga,
+    keranjang:tmp
+  })
+  input.save(function(err, input){
+    if(err){
+      res.send(err)
+    }
+    else{
+      res.send(input)
+    }
+  })
   },
   read: (req, res)=>{
     Transaction.find((err, result)=>{
