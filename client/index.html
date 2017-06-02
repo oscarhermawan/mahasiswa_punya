@@ -2,12 +2,229 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>UTAMA</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.1/axios.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.min.js"></script>
+    <title> Mahasiswa Punya! </title>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" charset="utf-8"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.1/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.min.js"></script>    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" id="bulma" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.2/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="./public/stylesheets/style.css">
+  
   </head>
   <body>
     <div id="app">
+    <section class="hero is-info is-medium">
+      <div class="hero-head">
+        <header class="nav">
+          <div class="container">
+            <div class="nav-left">
+              <a href="#" class="nav-item">
+                <!--Logo to homepage  -->
+              </a>
+            </div>
+            <div class="nav-right">
+              <span class="nav-item">
+                <a class="button is-info">
+                  Masuk
+                </a>
+                <a class="button is-info">
+                  Daftar
+                </a>
+              </span>
+            </div>
+          </div>
+        </header>
+      </div>
+      <!-- <div class="hero-body">
+        <div class="container has-text-centered">
+          <!-- Promosi Banner -->
+        <!-- </div>
+      </div> -->
+      <div class="hero-foot">
+        <nav class="tabs">
+          <div class="container">
+            <ul>
+              <li class="is-active"> Mau Cari Apa Bos ? </li>
+              <li><a href="#" class="button is-info"> Barang Kos-an </a></li>
+              <li><a href="#" class="button is-info"> Kos & Kontrakan </a></li>
+              <li><a href="#" class="button is-info"> Semuanya </a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </section>
+    <div class="container section">
+      <div class="columns gallery">
+        <div class="column is-4">
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title">
+                Kompor Listrik Maspion
+              </p>
+              <span class="card-header-icon timestamp">
+                2 Juni 2017 11:00
+              </span>
+            </header>
+            <div class="card-image">
+              <figure class="image is-4by3">
+                <img src="http://www.tokoperabotan.com/288-3227-thickbox/kompor-listrik-maspion-s-300.jpg" alt="Image">
+              </figure>
+            </div>
+            <div class="card-content">
+              <div class="panel-block-item">
+                <span class="likes">
+                  <span class="icon">
+                    <i class="fa fa-cart-plus"></i>
+                  </span>
+                  <a href="button is-info"> Beli </a>
+                </span>
+                <span class="comments">
+                  <span class="icon">
+                    <i class="fa fa-money"></i>
+                  </span>
+                  Rp 150.000
+                </span>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div>
+      <footer class="footer is-paddingless">
+        <div class="nav is-paddingless">
+          <div class="nav-left">
+            <a href="#" class="nav-item"> Created By Oscar & Nugraha & Zulfikar </a>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <div class="modal" id="sign-up">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Daftar</p>
+          <button class="delete"></button>
+        </header>
+          <section class="modal-card-body">
+            <form class="" action="index.html" method="post">
+              <input class="input" type="text" name="username" placeholder="Ketik username di sini">
+              <input class="input" type="password" name="password" placeholder="Ketik password di sini">
+              <input class="input" type="text" name="nama" placeholder="Ketik nama di sini">
+              <input class="input" type="text" name="email" placeholder="Ketik email di sini">
+              <input class="input" type="text" name="kampus" placeholder="Ketik kampus di sini">
+              <input class="input" type="text" name="contact" placeholder="Ketik nomer HP di sini">
+              <input  class="input" type="text" name="lokasi" placeholder="Ketik lokasi di sini">
+          </section>
+        <footer class="modal-card-foot">
+          <button type="submit" name="button" class="button is-success"> Daftar! </button>
+            </form>
+          <a class="button">Batal</a>
+        </footer>
+      </div>
+    </div>
+    <div class="modal ">
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Masuk</p>
+          <button class="delete"></button>
+        </header>
+        <section class="modal-card-body">
+          <form class="" action="index.html" method="post">
+            <input class="input" type="text" name="username" placeholder="Ketik username di sini">
+            <input class="input" type="password" name="password" placeholder="Ketik password di sini">
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-success" type="submit" name="button"> Masuk </button>
+          </form>
+          <a class="button">Cancel</a>
+        </footer>
+      </div>
+    </div>
+  <div class="modal  ">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Keranjang</p>
+        <button class="delete"></button>
+      </header>
+      <section class="modal-card-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th> No </th>
+              <th> Barang </th>
+              <th> Harga </th>
+              <th> Hapus dari keranjang</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th> 1 </th>
+              <td> Kompor Listrik Maspion </td>
+              <td> Rp 150.000 </td>
+              <td> <a href="#"> Hapus </a></td>
+            </tr>
+            <tr>
+              <th> 2 </th>
+              <td> Magic Jar Yongma </td>
+              <td> Rp 200.000 </td>
+              <td> <a href="#"> Hapus </a></td>
+            </tr>
+          </tbody>
+        </table>
+        <p><strong> Total : </strong> 350.000</p>
+      </section>
+      <footer class="modal-card-foot">
+        <a class="button is-success">Bayar</a>
+        <a class="button">Kembali</a>
+      </footer>
+    </div>
+  </div>
+  <div class="modal is-active">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Masukkan deskripsi</p>
+        <button class="delete"></button>
+      </header>
+      <section class="modal-card-body">
+        <form class="" action="index.html" method="post">
+          <label class="label"> Kategori </label>
+          <p class="control">
+            <span class="select">
+              <select class="" name="category">
+                <option value="barang"> Barang </option>
+                <option value="kos"> Kos-an / Kontrak-an </option>
+              </select>
+            </span>
+          </p>
+          <div class="field">
+            <label class="label"> Judul </label>
+            <input class="input" type="text" name="nama_barang" placeholder="Ketik nama barang / kos / kontrakan di sini">
+          </div>
+          <div class="field">
+            <label class="label"> Deskripsi </label>
+            <input class="input" type="text" name="deskripsi" placeholder="Ketik deskripsi di sini">
+          </div>
+          <div class="field">
+            <label class="label"> URL Foto </label>
+            <input class="input" type="text" name="foto" placeholder="Ketik url foto di sini">
+          </div>
+          <div class="field">
+            <label class="label"> Harga </label>
+            <input class="input" type="text" name="harga" placeholder="Ketik harga di sini">
+          </div>
+      </section>
+      <footer class="modal-card-foot">
+          <button class="button is-success" type="submit" name="button"> Jual </button>
+        </form>
+        <a class="button">Cancel</a>
+      </footer>
+    </div>
+  </div>
+   
+    
       <!-- <input type="text" name="" v-model="username"></br></br>
       <input type="text" name="" v-model="password"></br></br>
       <input type="text" name="" v-model="name"></br></br>
@@ -21,11 +238,12 @@
 
 
 
-      <input type="text" name="" v-model="usernameLogin"></br></br>
+<!--       <input type="text" name="" v-model="usernameLogin"></br></br>
       <input type="text" name="" v-model="passwordLogin"></br></br>
       <input type="button" name="" value="sign in" @click="loginLocal">
-      <input type="button" name="" value="log out" @click="logout">
+      <input type="button" name="" value="log out" @click="logout"> -->
     </div>
+
   </body>
   <script>
   var app = new Vue({
