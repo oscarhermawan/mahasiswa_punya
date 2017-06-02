@@ -24,6 +24,11 @@
             <div class="nav-right">
               <span class="nav-item">
                 <div v-if="is_login === false">
+
+                  <a class="button is-info" @click="modal_login">
+                    <button class="btn btn-primary"><fb:login-button scope="email, public_profile" onlogin="checkLoginState();"></fb:login-button></button>
+                  </a>
+
                   <a class="button is-info" @click="modal_login">
                     Masuk
                   </a>
@@ -275,6 +280,63 @@
     </div>
   </body>
   <script>
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1188694054574729',
+      xfbml      : true,
+      version    : 'v2.9'
+    });
+    FB.AppEvents.logPageView();
+    FB.getLoginStatus(function(response) {
+      // console.log(response);
+    });
+  };
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+   function checkLoginState() {
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+    }
+    function statusChangeCallback(response) {
+      if (response.status === 'connected') {
+        FB.api('/me', {fields: 'first_name, name, email'}, function (apiResponse) {
+          window.localStorage.setItem('tokenFacebook', response.authResponse.accessToken);
+          window.localStorage.setItem('id', apiResponse.id);
+          window.localStorage.setItem('name', apiResponse.first_name);
+          window.localStorage.setItem('login_method', 'facebook');
+          let url = 'http://localhost:3000/api/members/signinfb';
+          let body = {
+            id: apiResponse.id,
+            email: apiResponse.email,
+            name:apiResponse.first_name,
+            token: response.authResponse.accessToken
+          }
+          axios.post(url, body)
+            .then((res) => {
+              console.log(res.data);
+              localStorage.setItem('token', res.data) //result.data adalah TOKEN
+              window.location.href = '/'
+            })
+            .catch((err) => {
+              console.log('no berhasil');
+              console.log(err);
+            });
+        });
+      } else {
+        // The person is not logged into your app or we are unable to tell.
+        document.getElementById('status').innerHTML = 'Please log ' +
+          'into this app.';
+      }
+    }
+
+
   var app = new Vue({
     el: '#app',
     data:{

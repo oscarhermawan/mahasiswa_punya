@@ -28,7 +28,32 @@ module.exports = {
   },
 
   signupfb: (req, res)=>{
-
+    //PERTAMA LOGIN FB SUKSES, ID LANGSUNG DIBUAT
+    Member.findOne({member_id:req.body.id},function(err, result) {
+      if(result == null){
+        var userInput = new Member({
+          member_id:req.body.id,
+          email:req.body.email,
+          name:req.body.name
+        })
+        userInput.save(function(err,record){
+          if(err){
+            return console.log(err);
+          } else {
+            let token = jwt.sign(record, process.env.JWT_SECRET, {
+                expiresIn: '1d'
+            })
+            res.send(token)
+          }
+        })
+      }
+      else {
+        let token = jwt.sign(result, process.env.JWT_SECRET, {
+            expiresIn: '1d'
+        })
+        res.send(token)
+      }
+    })
   },
 
   signin: (req, res)=>{
